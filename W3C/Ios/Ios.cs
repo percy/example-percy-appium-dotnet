@@ -36,7 +36,7 @@ namespace csharp_appium__w3c_first_ios_test_browserstack
       // Initialize the remote Webdriver using BrowserStack remote URL
       // and desired capabilities defined above
       IOSDriver<IOSElement> driver = new IOSDriver<IOSElement>(
-              new Uri("http://hub-cloud.browserstack.com/wd/hub"), capabilities);
+              new Uri("https://hub-cloud.browserstack.com/wd/hub"), capabilities);
 
       // Initialize AppPercy
       AppPercy appPercy = new AppPercy(driver);
