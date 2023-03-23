@@ -6,6 +6,6 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="PercyIO.Appium" Version="0.0.3"/>
+    <PackageReference Include="PercyIO.Appium" Version="1.1.0"/>
   </ItemGroup>
 </Project>
