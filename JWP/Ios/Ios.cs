@@ -29,7 +29,7 @@ namespace csharp_appium__jwp_first_ios_test_browserstack
       capabilities.AddAdditionalCapability("name", "first_test");
       // Initialize the remote Webdriver using BrowserStack remote URL
       // and desired capabilities defined above
-      IOSDriver<AppiumWebElement> driver = new IOSDriver<AppiumWebElement>(
+      IOSDriver<IOSElement> driver = new IOSDriver<IOSElement>(
               new Uri("http://hub-cloud.browserstack.com/wd/hub"), capabilities);
 
       // // Initialize AppPercy
