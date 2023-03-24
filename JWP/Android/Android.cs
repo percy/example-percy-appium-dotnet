@@ -33,7 +33,7 @@ namespace csharp_appium__jwp_first_android_test_browserstack
       // Initialize the remote Webdriver using BrowserStack remote URL
       // and desired capabilities defined above
       AndroidDriver<AndroidElement> driver = new AndroidDriver<AndroidElement>(
-              new Uri("http://hub-cloud.browserstack.com/wd/hub"), capabilities);
+              new Uri("https://hub-cloud.browserstack.com/wd/hub"), capabilities);
 
       // Initialize AppPercy
       AppPercy appPercy = new AppPercy(driver);
