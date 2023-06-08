@@ -100,6 +100,19 @@ $ make test-android
 $ make test-ios
 ```
 
+Now for Appium.Webdriver v5
+```
+$ cd W3C/V5
+```
+Now run the build with following commands
+
+``` shell
+# For Android
+$ make test-android
+# For iOS
+$ make test-ios
+```
+
 This will run the app's Java Appium tests, which contain calls to create Percy screenshots. The screenshots
 will then be uploaded to Percy for comparison. Percy will use the Percy token you used in **Step 2**
 to know which organization and project to upload the screenshots to.
