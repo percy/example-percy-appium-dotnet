@@ -13,8 +13,11 @@ namespace csharp_appium__w3c_first_ios_test_browserstack
       AppiumOptions capabilities = new AppiumOptions();
       // Bstack options
       Dictionary<string, object> browserstackOptions = new Dictionary<string, object>();
-      browserstackOptions.Add("userName", "<USER>");
-      browserstackOptions.Add("accessKey", "<USER_AUTH_KEY>");
+      string USERNAME = Environment.GetEnvironmentVariable("BROWSERSTACK_USERNAME");
+      string ACCESS_KEY = Environment.GetEnvironmentVariable("BROWSERSTACK_ACCESS_KEY");
+      string APP_URL = Environment.GetEnvironmentVariable("APP_URL");
+      browserstackOptions.Add("userName", USERNAME);
+      browserstackOptions.Add("accessKey", ACCESS_KEY);
 
       // Percy options
       Dictionary<string, string> percyOtions = new Dictionary<string, string>();
@@ -27,7 +30,7 @@ namespace csharp_appium__w3c_first_ios_test_browserstack
       capabilities.AddAdditionalCapability("os_version", "16");
       capabilities.AddAdditionalCapability("appium:deviceName", "iPhone 14");
       // Adding app that was uploaded
-      capabilities.AddAdditionalCapability("appium:app", "<APP_URL>");
+      capabilities.AddAdditionalCapability("appium:app", APP_URL);
       // Project details
       capabilities.AddAdditionalCapability("project", "First CSharp W3C Project");
       capabilities.AddAdditionalCapability("build", "CSharp IOS");

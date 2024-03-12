@@ -15,8 +15,8 @@ install: npm dotnet
 clean:
 	git clean -Xdf
 
-test-android: install
+test-android: 
 	$(NPM)/percy app:exec --  dotnet run --no-restore --project Android
 
-test-ios: install
+test-ios: 
 	$(NPM)/percy app:exec --  dotnet run --no-restore --project Ios
