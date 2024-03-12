@@ -16,7 +16,7 @@ clean:
 	git clean -Xdf
 
 test-android: 
-	$(NPM)/percy app:exec --  dotnet run --no-restore --project Android
+	npx percy app:exec --  dotnet run --no-restore --project Android
 
 test-ios: 
-	$(NPM)/percy app:exec --  dotnet run --no-restore --project Ios
+	npx percy app:exec --  dotnet run --no-restore --project Ios
