@@ -27,8 +27,8 @@ namespace csharp_appium__w3c_first_ios_test_browserstack
       capabilities.AddAdditionalCapability("bstack:options", browserstackOptions);
       capabilities.AddAdditionalCapability("appium:percyOptions", percyOtions);
       // Adding Device
-      capabilities.AddAdditionalCapability("os_version", "16");
-      capabilities.AddAdditionalCapability("appium:deviceName", "iPhone 14");
+      capabilities.AddAdditionalCapability("os_version", "15");
+      capabilities.AddAdditionalCapability("appium:deviceName", "iPhone 13 Mini");
       // Adding app that was uploaded
       capabilities.AddAdditionalCapability("appium:app", APP_URL);
       // Project details
