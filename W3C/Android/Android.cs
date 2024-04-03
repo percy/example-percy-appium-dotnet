@@ -34,7 +34,7 @@ namespace csharp_appium__w3c_first_android_test_browserstack
       capabilities.AddAdditionalCapability("bstack:options", browserstackOptions);
       capabilities.AddAdditionalCapability("appium:percyOptions", percyOtions);
       // Adding Device
-      capabilities.AddAdditionalCapability("platformName", "Android");
+      capabilities.AddAdditionalCapability("platformName", "android");
       capabilities.AddAdditionalCapability("platformVersion", "11.0");
       capabilities.AddAdditionalCapability("appium:deviceName", "Samsung Galaxy S21 Ultra");
       // Adding app that was uploaded
