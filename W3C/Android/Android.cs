@@ -40,7 +40,7 @@ namespace csharp_appium__w3c_first_android_test_browserstack
       // Adding app that was uploaded
       capabilities.AddAdditionalCapability("appium:app", APP_URL);
       // Project details
-      capabilities.AddAdditionalCapability("automationName", "Appium");
+      capabilities.AddAdditionalCapability("automationName", "UIAutomator2");
       capabilities.AddAdditionalCapability("project", "First CSharp W3C Project");
       capabilities.AddAdditionalCapability("build", "CSharp Android");
       capabilities.AddAdditionalCapability("name", "first_test");
