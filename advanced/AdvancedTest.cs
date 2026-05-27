@@ -26,8 +26,8 @@ public class AppiumAdvancedFixture : IDisposable
         {
             { "userName", Environment.GetEnvironmentVariable("AA_USERNAME") ?? "" },
             { "accessKey", Environment.GetEnvironmentVariable("AA_ACCESS_KEY") ?? "" },
-            { "projectName", Environment.GetEnvironmentVariable("PERCY_PROJECT") ?? "Percy Appium .NET Advanced" },
-            { "buildName", Environment.GetEnvironmentVariable("PERCY_BUILD") ?? "Advanced Dotnet Appium" },
+            { "projectName", Environment.GetEnvironmentVariable("BROWSERSTACK_PROJECT_NAME") ?? "Percy Appium .NET Advanced" },
+            { "buildName", Environment.GetEnvironmentVariable("BROWSERSTACK_BUILD_NAME") ?? "Advanced Dotnet Appium" },
         });
         caps.AddAdditionalCapability("appium:percyOptions", new Dictionary<string, string>
         {
@@ -133,6 +133,10 @@ public class AdvancedTests : IClassFixture<AppiumAdvancedFixture>
     public void ExercisesSyncMode()
     {
         var opts = new Dictionary<string, object> { { "sync", true } };
+        // sync:true blocks until Percy returns the comparison result. The
+        // PercyIO.Appium 2.1.0 AppPercy.Screenshot wrapper is declared `void`
+        // (it discards the provider's result), so there is no value to capture
+        // or assert here — the sync behaviour is purely the blocking call.
         _percy.Screenshot("Wikipedia Home — sync", opts);
     }
 
