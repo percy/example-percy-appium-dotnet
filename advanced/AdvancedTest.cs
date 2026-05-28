@@ -5,6 +5,7 @@
 // Run against the BrowserStack App Automate hub. Requires AA_USERNAME,
 // AA_ACCESS_KEY, APP env vars. See ../README.md.
 
+using OpenQA.Selenium;
 using OpenQA.Selenium.Appium;
 using OpenQA.Selenium.Appium.Android;
 using OpenQA.Selenium.Appium.Enums;
@@ -48,6 +49,12 @@ public class AppiumAdvancedFixture : IDisposable
 
 public class AdvancedTests : IClassFixture<AppiumAdvancedFixture>
 {
+    // A stable Wikipedia home-screen selector. The previous TextView[@text="Search Wikipedia"]
+    // never matched the rendered hierarchy on Pixel 6 / Android 12, so ignore/consider
+    // regions were silently empty. The toolbar logo (content-desc="Wikipedia") is the
+    // most stable element on the Wikipedia sample app's home view.
+    private const string WikipediaLogoXpath = "//android.widget.ImageView[@content-desc=\"Wikipedia\"]";
+
     private readonly AppPercy _percy;
     private readonly AndroidDriver<AppiumWebElement> _driver;
 
@@ -63,34 +70,47 @@ public class AdvancedTests : IClassFixture<AppiumAdvancedFixture>
     [Fact]
     public void ExercisesDeviceNameAndOrientation()
     {
-        var opts = new Dictionary<string, object>
+        // Actually rotate the device so the snapshot reflects landscape instead of
+        // just being tagged with the metadata. Restore Portrait afterwards so
+        // subsequent [Fact]s on the shared fixture start from a known orientation.
+        _driver.Orientation = ScreenOrientation.Landscape;
+        try
         {
-            { "device_name", Environment.GetEnvironmentVariable("DEVICE") ?? "Google Pixel 6" },
-            { "orientation", "landscape" },
-        };
-        _percy.Screenshot("Wikipedia Home — landscape", opts);
+            var opts = new ScreenshotOptions
+            {
+                DeviceName = Environment.GetEnvironmentVariable("DEVICE") ?? "Google Pixel 6",
+                Orientation = "landscape",
+            };
+            _percy.Screenshot("Wikipedia Home - landscape", opts);
+        }
+        finally
+        {
+            _driver.Orientation = ScreenOrientation.Portrait;
+        }
     }
 
     [Fact]
     public void ExercisesFullscreenAndBars()
     {
-        var opts = new Dictionary<string, object>
+        var opts = new ScreenshotOptions
         {
-            { "fullscreen", true },
-            { "status_bar_height", 24 },
-            { "nav_bar_height", 0 },
+            StatusBarHeight = 24,
+            NavBarHeight = 0,
         };
-        _percy.Screenshot("Wikipedia Home — fullscreen", opts);
+        // AppPercy.Screenshot signature: Screenshot(name, options, fullScreen=false).
+        // The wrapper overwrites options.FullScreen with the third argument, so
+        // fullScreen MUST be passed positionally to take effect.
+        _percy.Screenshot("Wikipedia Home - fullscreen", opts, true);
     }
 
     [Fact]
     public void ExercisesIgnoreRegionsViaXpath()
     {
-        var opts = new Dictionary<string, object>
+        var opts = new ScreenshotOptions
         {
-            { "ignore_regions_xpaths", new[] { "//android.widget.TextView[@text=\"Search Wikipedia\"]" } },
+            IgnoreRegionXpaths = new List<string> { WikipediaLogoXpath },
         };
-        _percy.Screenshot("Wikipedia Home — ignore via xpath", opts);
+        _percy.Screenshot("Wikipedia Home - ignore via xpath", opts);
     }
 
     [Fact]
@@ -98,55 +118,55 @@ public class AdvancedTests : IClassFixture<AppiumAdvancedFixture>
     {
         var wait = new WebDriverWait(_driver, TimeSpan.FromSeconds(30));
         var el = wait.Until(d => d.FindElement(MobileBy.AccessibilityId("Search Wikipedia")));
-        var opts = new Dictionary<string, object>
+        var opts = new ScreenshotOptions
         {
-            { "ignore_region_appium_elements", new[] { el } },
+            IgnoreRegionAppiumElements = new List<object> { el },
         };
-        _percy.Screenshot("Wikipedia Home — ignore via appium element", opts);
+        _percy.Screenshot("Wikipedia Home - ignore via appium element", opts);
     }
 
     [Fact]
     public void ExercisesCustomIgnoreRegions()
     {
-        var region = new Dictionary<string, object>
+        var opts = new ScreenshotOptions
         {
-            { "top", 0 }, { "bottom", 100 }, { "left", 0 }, { "right", 300 },
+            CustomIgnoreRegions = new List<Region>
+            {
+                new Region(0, 100, 0, 300),
+            },
         };
-        var opts = new Dictionary<string, object>
-        {
-            { "custom_ignore_regions", new[] { region } },
-        };
-        _percy.Screenshot("Wikipedia Home — custom ignore region", opts);
+        _percy.Screenshot("Wikipedia Home - custom ignore region", opts);
     }
 
     [Fact]
     public void ExercisesConsiderRegionsViaXpath()
     {
-        var opts = new Dictionary<string, object>
+        var opts = new ScreenshotOptions
         {
-            { "consider_regions_xpaths", new[] { "//android.widget.TextView[@text=\"Search Wikipedia\"]" } },
+            ConsiderRegionXpaths = new List<string> { WikipediaLogoXpath },
         };
-        _percy.Screenshot("Wikipedia Home — consider via xpath", opts);
+        _percy.Screenshot("Wikipedia Home - consider via xpath", opts);
     }
 
     [Fact]
     public void ExercisesSyncMode()
     {
-        var opts = new Dictionary<string, object> { { "sync", true } };
-        // sync:true blocks until Percy returns the comparison result. The
-        // PercyIO.Appium 2.1.0 AppPercy.Screenshot wrapper is declared `void`
-        // (it discards the provider's result), so there is no value to capture
-        // or assert here — the sync behaviour is purely the blocking call.
-        _percy.Screenshot("Wikipedia Home — sync", opts);
+        var opts = new ScreenshotOptions { Sync = true };
+        // AppPercy.Screenshot in PercyIO.Appium 3.0.9-beta.1 returns JObject? with
+        // the comparison results when sync=true. Assert it is non-null to prove
+        // the sync round-trip actually completed.
+        var result = _percy.Screenshot("Wikipedia Home - sync", opts);
+        Assert.NotNull(result);
     }
 
     [Fact]
     public void ExercisesTestCaseAndLabels()
     {
-        var opts = new Dictionary<string, object>
+        var opts = new ScreenshotOptions
         {
-            { "test_case", "home-smoke" }, { "labels", "smoke,appium-dotnet" },
+            TestCase = "home-smoke",
+            Labels = "smoke,appium-dotnet",
         };
-        _percy.Screenshot("Wikipedia Home — test_case + labels", opts);
+        _percy.Screenshot("Wikipedia Home - test_case + labels", opts);
     }
 }
