@@ -4,7 +4,7 @@
 sdk: appium-dotnet
 package: PercyIO.Appium
 language: csharp
-sdk_min_version: '2.1.0'
+sdk_min_version: '3.0.0'
 cli_min_version: '1.31.13'
 
 rows:

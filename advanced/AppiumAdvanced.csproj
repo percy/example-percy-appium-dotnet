@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net9.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <IsPackable>false</IsPackable>
@@ -9,7 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="PercyIO.Appium" Version="3.0.9-beta.1"/>
+    <PackageReference Include="PercyIO.Appium" Version="3.0.8"/>
     <PackageReference Include="DotNetSeleniumExtras.WaitHelpers" Version="3.11.0"/>
     <PackageReference Include="Appium.WebDriver" Version="4.4.5"/>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />

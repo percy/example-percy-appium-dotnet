@@ -4,7 +4,7 @@ This directory exercises the full applicable Percy SDK feature surface for `Perc
 
 ## What this example covers
 
-An xUnit suite (`AdvancedTest.cs`) where each `[Fact]` exercises one row of the [App Percy / Appium Native matrix](../../../docs/advanced-example-feature-matrix.md): device_name override, orientation, fullscreen + status_bar/nav_bar heights, ignore regions via xpath / appium element / custom bbox, consider regions via xpath, sync mode, test_case + labels, build metadata via env.
+An xUnit suite (`AdvancedTest.cs`) where each `[Fact]` exercises one row of the App Percy / Appium Native matrix (source of truth: [`matrix.yml`](./matrix.yml)): device_name override, orientation, fullscreen + status_bar/nav_bar heights, ignore regions via xpath / appium element / custom bbox, consider regions via xpath, sync mode, test_case + labels, build metadata via env.
 
 Web-only options marked `N/A` in `matrix.yml`.
 

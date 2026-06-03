@@ -27,6 +27,10 @@ public class AppiumAdvancedFixture : IDisposable
         {
             { "userName", Environment.GetEnvironmentVariable("AA_USERNAME") ?? "" },
             { "accessKey", Environment.GetEnvironmentVariable("AA_ACCESS_KEY") ?? "" },
+            // BrowserStack W3C: device + OS selection must live inside bstack:options
+            // (as deviceName / osVersion). A bare top-level os_version cap is dropped.
+            { "deviceName", Environment.GetEnvironmentVariable("DEVICE") ?? "Google Pixel 6" },
+            { "osVersion", Environment.GetEnvironmentVariable("OS_VERSION") ?? "12.0" },
             { "projectName", Environment.GetEnvironmentVariable("BROWSERSTACK_PROJECT_NAME") ?? "Percy Appium .NET Advanced" },
             { "buildName", Environment.GetEnvironmentVariable("BROWSERSTACK_BUILD_NAME") ?? "Advanced Dotnet Appium" },
         });
@@ -34,8 +38,6 @@ public class AppiumAdvancedFixture : IDisposable
         {
             { "enabled", "true" }, { "ignoreErrors", "true" },
         });
-        caps.AddAdditionalCapability("appium:deviceName", Environment.GetEnvironmentVariable("DEVICE") ?? "Google Pixel 6");
-        caps.AddAdditionalCapability("os_version", Environment.GetEnvironmentVariable("OS_VERSION") ?? "12.0");
         caps.AddAdditionalCapability("appium:app", Environment.GetEnvironmentVariable("APP"));
 
         Driver = new AndroidDriver<AppiumWebElement>(
@@ -49,11 +51,12 @@ public class AppiumAdvancedFixture : IDisposable
 
 public class AdvancedTests : IClassFixture<AppiumAdvancedFixture>
 {
-    // A stable Wikipedia home-screen selector. The previous TextView[@text="Search Wikipedia"]
-    // never matched the rendered hierarchy on Pixel 6 / Android 12, so ignore/consider
-    // regions were silently empty. The toolbar logo (content-desc="Wikipedia") is the
-    // most stable element on the Wikipedia sample app's home view.
-    private const string WikipediaLogoXpath = "//android.widget.ImageView[@content-desc=\"Wikipedia\"]";
+    // Wikipedia home-screen selector, verified against a real Pixel 6 / Android 12
+    // page source: the feed's search bar has the locale-independent resource-id
+    // org.wikipedia.alpha:id/search_container. (There is no content-desc="Wikipedia"
+    // element, so the previous selector matched nothing and the ignore/consider
+    // regions were silently empty.) All SDK examples use this same selector.
+    private const string WikipediaRegionXpath = "//*[@resource-id=\"org.wikipedia.alpha:id/search_container\"]";
 
     private readonly AppPercy _percy;
     private readonly AndroidDriver<AppiumWebElement> _driver;
@@ -108,7 +111,7 @@ public class AdvancedTests : IClassFixture<AppiumAdvancedFixture>
     {
         var opts = new ScreenshotOptions
         {
-            IgnoreRegionXpaths = new List<string> { WikipediaLogoXpath },
+            IgnoreRegionXpaths = new List<string> { WikipediaRegionXpath },
         };
         _percy.Screenshot("Wikipedia Home - ignore via xpath", opts);
     }
@@ -143,7 +146,7 @@ public class AdvancedTests : IClassFixture<AppiumAdvancedFixture>
     {
         var opts = new ScreenshotOptions
         {
-            ConsiderRegionXpaths = new List<string> { WikipediaLogoXpath },
+            ConsiderRegionXpaths = new List<string> { WikipediaRegionXpath },
         };
         _percy.Screenshot("Wikipedia Home - consider via xpath", opts);
     }
@@ -152,9 +155,11 @@ public class AdvancedTests : IClassFixture<AppiumAdvancedFixture>
     public void ExercisesSyncMode()
     {
         var opts = new ScreenshotOptions { Sync = true };
-        // AppPercy.Screenshot in PercyIO.Appium 3.0.9-beta.1 returns JObject? with
-        // the comparison results when sync=true. Assert it is non-null to prove
-        // the sync round-trip actually completed.
+        // sync=true makes AppPercy.Screenshot return a JObject: the comparison
+        // results with a full-access PERCY_TOKEN, or an error payload (e.g. the
+        // 403 returned by a write-only token, the common CI setup). The SDK never
+        // returns null here, so a non-null check is safe regardless of token scope;
+        // a full-access token is only needed to inspect real comparison data.
         var result = _percy.Screenshot("Wikipedia Home - sync", opts);
         Assert.NotNull(result);
     }
