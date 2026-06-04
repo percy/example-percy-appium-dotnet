@@ -46,7 +46,18 @@ public class AppiumAdvancedFixture : IDisposable
         Thread.Sleep(5000);
     }
 
-    public void Dispose() => Driver.Quit();
+    public void Dispose()
+    {
+        // A long-running session (full-page scroll-and-stitch + the sync
+        // comparison wait can idle the appium connection) may already have been
+        // reclaimed by the hub. Quit() on a terminated session throws; swallow
+        // it so cleanup never fails the run — snapshots are already uploaded.
+        try { Driver.Quit(); }
+        catch (Exception e)
+        {
+            System.Console.WriteLine($"[advanced] Driver.Quit() ignored (session already ended): {e.Message}");
+        }
+    }
 }
 
 public class AdvancedTests : IClassFixture<AppiumAdvancedFixture>
@@ -104,6 +115,29 @@ public class AdvancedTests : IClassFixture<AppiumAdvancedFixture>
         // The wrapper overwrites options.FullScreen with the third argument, so
         // fullScreen MUST be passed positionally to take effect.
         _percy.Screenshot("Wikipedia Home - fullscreen", opts, true);
+    }
+
+    [Fact]
+    public void ExercisesFullpageWithBottomScrollOffset()
+    {
+        // Full-page (scroll-and-stitch) capture — App Automate only. The
+        // device's bottom navigation/system bar is sticky, so the scroll
+        // engine treats it as the end of the page and grabs a single tile.
+        // Ignoring the bottom BottomScrollviewOffset pixels lets the scroll
+        // advance past the fixed bar and stitch the real content. Verified on
+        // Pixel 6: without the offset = 1 tile, with offset = ~7 tiles. Default
+        // = Pixel 6 nav-bar height (160 device px); override via
+        // BOTTOM_SCROLLVIEW_OFFSET. FullPage is read from options (not the
+        // positional fullScreen arg), so a plain Screenshot(name, opts) call.
+        var bottomOffset = int.Parse(
+            Environment.GetEnvironmentVariable("BOTTOM_SCROLLVIEW_OFFSET") ?? "160");
+        var opts = new ScreenshotOptions
+        {
+            FullPage = true,
+            ScreenLengths = 4,
+            BottomScrollviewOffset = bottomOffset,
+        };
+        _percy.Screenshot("Wikipedia Home - fullpage", opts);
     }
 
     [Fact]
