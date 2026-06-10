@@ -1,6 +1,15 @@
 # example-percy-appium-dotnet
 Example app used by the [Percy Dotnet Appium tutorial](https://docs.percy.io/v2-app/docs/appium-for-dotnet) demonstrating Percy's dotnet Appium integration.
 
+> **New:** This repo ships an [`advanced/`](./advanced) example covering the full applicable App Percy SDK feature surface for `PercyIO.Appium`. See the [Percy SDK Feature Matrix](https://docs.percy.io/docs/sdk-feature-matrix) for cross-SDK coverage.
+
+## Examples
+
+| Example | What it shows | Run command |
+|---|---|---|
+| `./W3C/` and `./JWP/` (basic) | Minimum viable: `AppPercy.Screenshot(name)` per Android/iOS test. Start here. | `dotnet run --project W3C/Android` |
+| [`./advanced/`](./advanced) | Full applicable App Percy SDK feature surface: orientation, ignore/consider regions, fullscreen + status/nav bar heights, sync mode, test_case + labels. xUnit + Dictionary<string,object> overload. See [`advanced/README.md`](./advanced/README.md). | `cd advanced && make test` |
+
 ## Dotnet Appium Tutorial
 
 The tutorial assumes you're already familiar with dotnet and

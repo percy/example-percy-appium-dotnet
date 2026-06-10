@@ -1,0 +1,6 @@
+# PER-8195 — global config for PercyIO.Appium advanced example.
+
+version: 2
+
+percy:
+  defer_uploads: false

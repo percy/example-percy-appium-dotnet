@@ -1,0 +1,93 @@
+# PER-8195 Phase 2 — Appium-.NET matrix-row mapping.
+# Test code: AdvancedTest.cs (xUnit).
+
+sdk: appium-dotnet
+package: PercyIO.Appium
+language: csharp
+sdk_min_version: '3.0.0'
+cli_min_version: '1.31.13'
+
+rows:
+  - id: device_name_override
+    state: covered
+    test: 'AdvancedTests > ExercisesDeviceNameAndOrientation'
+  - id: orientation_handling
+    state: covered
+    test: 'AdvancedTests > ExercisesDeviceNameAndOrientation'
+  - id: fullscreen
+    state: covered
+    test: 'AdvancedTests > ExercisesFullscreenAndBars'
+  - id: status_bar_height
+    state: covered
+    test: 'AdvancedTests > ExercisesFullscreenAndBars'
+  - id: nav_bar_height
+    state: covered
+    test: 'AdvancedTests > ExercisesFullscreenAndBars'
+  - id: fullpage
+    state: covered
+    test: 'AdvancedTests > ExercisesFullpageWithBottomScrollOffset'
+  - id: screen_lengths
+    state: covered
+    test: 'AdvancedTests > ExercisesFullpageWithBottomScrollOffset'
+  - id: bottom_scrollview_offset
+    state: covered
+    test: 'AdvancedTests > ExercisesFullpageWithBottomScrollOffset'
+  - id: ignore_regions_xpaths
+    state: covered
+    test: 'AdvancedTests > ExercisesIgnoreRegionsViaXpath'
+  - id: ignore_region_appium_elements
+    state: covered
+    test: 'AdvancedTests > ExercisesIgnoreRegionsViaAppiumElement'
+  - id: custom_ignore_regions
+    state: covered
+    test: 'AdvancedTests > ExercisesCustomIgnoreRegions'
+  - id: consider_regions_xpaths
+    state: covered
+    test: 'AdvancedTests > ExercisesConsiderRegionsViaXpath'
+  - id: sync
+    state: covered
+    test: 'AdvancedTests > ExercisesSyncMode'
+  - id: test_case
+    state: covered
+    test: 'AdvancedTests > ExercisesTestCaseAndLabels'
+  - id: labels
+    state: covered
+    test: 'AdvancedTests > ExercisesTestCaseAndLabels'
+
+  - id: build_metadata_via_env
+    state: covered
+    test: 'AppiumAdvancedFixture reads BROWSERSTACK_PROJECT_NAME / BROWSERSTACK_BUILD_NAME / DEVICE / APP env'
+  - id: env_percy_branch
+    state: covered
+  - id: env_percy_commit
+    state: covered
+
+  # Web-only.
+  - id: widths
+    state: n_a
+  - id: percy_css
+    state: n_a
+  - id: min_height
+    state: n_a
+  - id: enable_javascript
+    state: n_a
+  - id: scope
+    state: n_a
+  - id: discovery
+    state: n_a
+  - id: dom_transformation
+    state: n_a
+  - id: responsive_snapshot_capture
+    state: n_a
+  - id: readiness_preset
+    state: n_a
+  - id: device_pixel_ratio
+    state: n_a
+  - id: browsers
+    state: n_a
+
+  - id: percy_yml_global_config
+    state: covered
+  - id: environment_info_reporting
+    state: covered
+    test: 'automatic via PercyIO.Appium client info'
