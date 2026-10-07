@@ -25,8 +25,6 @@ namespace csharp_appium__w3c_first_ios_test_browserstack
       capabilities.AddAdditionalAppiumOption("appium:percyOptions", percyOtions);
       // Adding Device
       capabilities.App = "<APP_URL>";
-      capabilities.AddAdditionalAppiumOption("bstack:options", browserstackOptions);
-      capabilities.AddAdditionalAppiumOption("appium:percyOptions", percyOtions);
       // Adding Device
       capabilities.DeviceName = "iPhone 14";
       capabilities.PlatformVersion = "16";

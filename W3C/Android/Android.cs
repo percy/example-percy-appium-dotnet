@@ -32,12 +32,12 @@ namespace csharp_appium__w3c_first_android_test_browserstack
       capabilities.AddAdditionalCapability("appium:percyOptions", percyOtions);
       // Adding Device
       capabilities.AddAdditionalCapability("platformName", "Android");
-      capabilities.AddAdditionalCapability("platformVersion", "9.0");
-      capabilities.AddAdditionalCapability("appium:deviceName", "Google Pixel 3");
+      capabilities.AddAdditionalCapability("platformVersion", "12.0");
+      capabilities.AddAdditionalCapability("appium:deviceName", "Google Pixel 6");
       // Adding app that was uploaded
       capabilities.AddAdditionalCapability("appium:app", "<APP_URL>");
       // Project details
-      capabilities.AddAdditionalCapability("automationName", "Appium");
+      capabilities.AddAdditionalCapability("automationName", "UIAutomator2");
       capabilities.AddAdditionalCapability("project", "First CSharp W3C Project");
       capabilities.AddAdditionalCapability("build", "CSharp Android");
       capabilities.AddAdditionalCapability("name", "first_test");

@@ -19,11 +19,13 @@ namespace csharp_appium__jwp_first_android_test_browserstack
       // App url we get post uploading in response
       capabilities.AddAdditionalCapability("app", "<APP_URL>");
       // Specify device and os_version
-      capabilities.AddAdditionalCapability("device", "Google Pixel 3");
-      capabilities.AddAdditionalCapability("os_version", "9.0");
+      capabilities.AddAdditionalCapability("device", "Google Pixel 6");
+      capabilities.AddAdditionalCapability("os_version", "12.0");
       // Specify the platform name
       capabilities.PlatformName = "Android";
       // Percy Options
+      // JSONWP is only served by Appium 1.x; Appium 2+ accepts W3C sessions only (see ../W3C).
+      capabilities.AddAdditionalCapability("browserstack.appium_version", "1.22.0");
       capabilities.AddAdditionalCapability("percy.enabled", "True");
       capabilities.AddAdditionalCapability("percy.ignoreErrors", "True");
       // Set other BrowserStack capabilities

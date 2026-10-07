@@ -92,6 +92,10 @@ Minimum required `@percy/cli` version is 1.15.0 for this to work correctly. If y
 update it to latest or minium required version with `npm update -g @percy/cli`.
 
 Now for JSONWireProtocol
+
+> JSONWP sessions are only served by Appium 1.x, so `JWP/` pins `browserstack.appium_version` to 1.22.0.
+> Appium 2+ (BrowserStack's new default) accepts W3C sessions only — use `W3C/` for new tests.
+
 ```
 $ cd JWP
 ```
