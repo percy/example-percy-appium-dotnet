@@ -93,8 +93,9 @@ update it to latest or minium required version with `npm update -g @percy/cli`.
 
 Now for JSONWireProtocol
 
-> JSONWP sessions are only served by Appium 1.x, so `JWP/` pins `browserstack.appium_version` to 1.22.0.
-> Appium 2+ (BrowserStack's new default) accepts W3C sessions only — use `W3C/` for new tests.
+> `JWP/` uses legacy (JSONWP-style) capabilities such as `device`, `os_version` and `browserstack.*`. BrowserStack
+> rejects those on Appium >= 2.0.0 (`BROWSERSTACK_INVALID_PROTOCOL`), its new default, so `JWP/` pins
+> `browserstack.appium_version` to 1.22.0. Use `W3C/` for new tests.
 
 ```
 $ cd JWP

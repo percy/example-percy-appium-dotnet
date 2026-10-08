@@ -21,7 +21,8 @@ namespace csharp_appium__jwp_first_ios_test_browserstack
       capabilities.AddAdditionalCapability("device", "iPhone 13");
 
       // Percy Options
-      // JSONWP is only served by Appium 1.x; Appium 2+ accepts W3C sessions only (see ../W3C).
+      // These legacy (JSONWP-style) capabilities are rejected by BrowserStack on Appium >= 2.0.0
+      // (BROWSERSTACK_INVALID_PROTOCOL), so this sample stays on Appium 1.x. Use ../W3C for new tests.
       capabilities.AddAdditionalCapability("browserstack.appium_version", "1.22.0");
       capabilities.AddAdditionalCapability("percy.enabled", "True");
       capabilities.AddAdditionalCapability("percy.ignoreErrors", "True");
