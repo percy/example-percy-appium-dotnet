@@ -18,6 +18,7 @@ namespace csharp_appium__w3c_first_ios_test_browserstack
       string APP_URL = Environment.GetEnvironmentVariable("APP_URL");
       browserstackOptions.Add("userName", USERNAME);
       browserstackOptions.Add("accessKey", ACCESS_KEY);
+      browserstackOptions.Add("appiumVersion", Environment.GetEnvironmentVariable("APPIUM_VERSION") ?? "2.19.0");
 
       // Percy options
       Dictionary<string, string> percyOtions = new Dictionary<string, string>();
@@ -28,7 +29,7 @@ namespace csharp_appium__w3c_first_ios_test_browserstack
       capabilities.AddAdditionalCapability("appium:percyOptions", percyOtions);
       // Adding Device
       capabilities.AddAdditionalCapability("platformVersion", "15");
-      capabilities.AddAdditionalCapability("appium:deviceName", "iPhone 13 Mini");
+      capabilities.AddAdditionalCapability("appium:deviceName", "iPhone 13");
       // Adding app that was uploaded
       capabilities.AddAdditionalCapability("appium:app", APP_URL);
       // Project details

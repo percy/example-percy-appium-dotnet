@@ -25,6 +25,7 @@ namespace csharp_appium__w3c_first_android_test_browserstack
       string APP_URL = Environment.GetEnvironmentVariable("APP_URL");
       browserstackOptions.Add("userName", USERNAME);
       browserstackOptions.Add("accessKey", ACCESS_KEY);
+      browserstackOptions.Add("appiumVersion", Environment.GetEnvironmentVariable("APPIUM_VERSION") ?? "2.19.0");
 
       //percyOptions
       Dictionary<string, string> percyOtions = new Dictionary<string, string>();
