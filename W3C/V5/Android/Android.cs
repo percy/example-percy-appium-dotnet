@@ -24,7 +24,7 @@ namespace csharp_appium__w3c_v5_first_android_test_browserstack
       capabilities.AddAdditionalAppiumOption("bstack:options", browserstackOptions);
       capabilities.AddAdditionalAppiumOption("appium:percyOptions", percyOtions);
       // Specify device and os_version
-      capabilities.DeviceName = "Samsung Galaxy M52";
+      capabilities.DeviceName = "Samsung Galaxy S21";
       capabilities.PlatformVersion = "11.0";
       // Specify the platform name
       capabilities.PlatformName = "Android";
