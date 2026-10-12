@@ -17,10 +17,13 @@ namespace csharp_appium__jwp_first_ios_test_browserstack
       // App url we get post uploading in response
       capabilities.AddAdditionalCapability("app", "<APP_URL>");
       // Specify device and os_version
-      capabilities.AddAdditionalCapability("os_version", "16");
-      capabilities.AddAdditionalCapability("device", "iPhone 12 Pro");
+      capabilities.AddAdditionalCapability("os_version", "15");
+      capabilities.AddAdditionalCapability("device", "iPhone 13");
 
       // Percy Options
+      // These legacy (JSONWP-style) capabilities are rejected by BrowserStack on Appium >= 2.0.0
+      // (BROWSERSTACK_INVALID_PROTOCOL), so this sample stays on Appium 1.x. Use ../W3C for new tests.
+      capabilities.AddAdditionalCapability("browserstack.appium_version", "1.22.0");
       capabilities.AddAdditionalCapability("percy.enabled", "True");
       capabilities.AddAdditionalCapability("percy.ignoreErrors", "True");
       // Project details

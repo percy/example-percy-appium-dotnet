@@ -19,11 +19,14 @@ namespace csharp_appium__jwp_first_android_test_browserstack
       // App url we get post uploading in response
       capabilities.AddAdditionalCapability("app", "<APP_URL>");
       // Specify device and os_version
-      capabilities.AddAdditionalCapability("device", "Google Pixel 3");
-      capabilities.AddAdditionalCapability("os_version", "9.0");
+      capabilities.AddAdditionalCapability("device", "Google Pixel 6");
+      capabilities.AddAdditionalCapability("os_version", "12.0");
       // Specify the platform name
       capabilities.PlatformName = "Android";
       // Percy Options
+      // These legacy (JSONWP-style) capabilities are rejected by BrowserStack on Appium >= 2.0.0
+      // (BROWSERSTACK_INVALID_PROTOCOL), so this sample stays on Appium 1.x. Use ../W3C for new tests.
+      capabilities.AddAdditionalCapability("browserstack.appium_version", "1.22.0");
       capabilities.AddAdditionalCapability("percy.enabled", "True");
       capabilities.AddAdditionalCapability("percy.ignoreErrors", "True");
       // Set other BrowserStack capabilities
